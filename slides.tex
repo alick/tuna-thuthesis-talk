@@ -104,16 +104,6 @@ ItalicFont={KaiTi}]{SimSun}
 
 \subject{ThuThesis, GitHub}
 
-% Delete this, if you do not want the table of contents to pop up at
-% the beginning of each subsection:
-\AtBeginSubsection[]
-{
-  \begin{frame}<beamer>{目录}
-    \tableofcontents[currentsection,currentsubsection]
-  \end{frame}
-}
-
-
 % If you wish to uncover everything in a step-wise fashion, uncomment
 % the following command:
 
@@ -132,12 +122,6 @@ ItalicFont={KaiTi}]{SimSun}
   \titlepage
 \end{frame}
 
-\begin{frame}{目录}
-  \tableofcontents
-  % You might wish to add the option [pausesections]
-\end{frame}
-
-
 % Since this a solution template for a generic talk, very little can
 % be said about how it should be structured. However, the talk length
 % of between 15min and 45min and the theme suggest that you stick to
@@ -150,20 +134,70 @@ ItalicFont={KaiTi}]{SimSun}
 
 \section{简介}
 
+\lstMakeShortInline|
+
 \begin{frame}{\ThuThesis}
   \framesubtitle{清华大学学位论文 \LaTeX{} 模板}
   \begin{itemize}
   \item 最早：王磊~(2004.4)
   \item 2005 年：薛瑞尼
-  \item 最新发布版：\ThuThesis v4.8.1 (2014/12/09)
+  \item 上一发布版：\ThuThesis v4.6 (2011/10/22)
   \item 全面支持本科、硕士、博士、博士后论文格式
+  \item 最新发布版：\ThuThesis v4.8.1 (2014/12/09)
   \end{itemize}
 \end{frame}
 \section{\ThuThesis 新版本}
 \subsection{\ThuThesis 4.8.1}
+\begin{frame}[fragile]{\ThuThesis 4.8.1}
+  \begin{itemize}
+    \item 基于 |ctexbook| 文档类
+      \begin{itemize}
+        \item 不再需要多记一种语法
+        \item 不再支持 latex+dvips+ps2pdf 编译方式
+        \item 字号命令保留，如 |\banxiaosi[1.3]|
+      \end{itemize}
+    \item 转向 UTF-8 字符编码，不再支持 GBK
+    \item 硕士论文英文封面
+    \item 各种BUG修正
+      \begin{itemize}
+        \item 本科生作者信息名称、关键词、页码字号、标题下划线等
+      \end{itemize}
+    \item 引入中文字体选择脚本 |zhfonts.py|
+  \end{itemize}
+\end{frame}
+
 \subsection{\ThuThesis 4.8.2}
+\begin{frame}[fragile]{\ThuThesis 4.8.2}
+  \begin{itemize}
+    \item BUG修正版本
+      \begin{itemize}
+        \item 避免 XeTeX 引擎下部分数学符号字体被自动调整成 CMR
+        \item 修正（奇怪的）章节间距问题
+        \item 修正学位论文中目录里节前缩进
+        \item 修正定理标题为黑体
+        \item 修正博士后简历页标题
+        \item 参考文献支持电子文献类型 |online|
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
 \subsection{\ThuThesis 4.9}
-\section{总结}
+\begin{frame}[fragile]{\ThuThesis 4.9}
+  \begin{itemize}
+    \item 固定字体设置，兼容 |ctex| 2.0
+      \begin{itemize}
+        \item 推荐中易六种字体
+        \item 仍可以通过修改 |thufonts.def| 自定义字体
+      \end{itemize}
+    \item Makefile 缺省使用 latexmk 自动化编译
+    \item 简历部分更符合格式指南和示例文件
+      \begin{itemize}
+        \item 引入新列表环境 |publications|、|achievements|
+        \item |publications| 环境之间自动加空行
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+\section{使用指南}
 \begin{frame}{如何使用最新版本？}
       \begin{columns}
         \begin{column}{.7\textwidth}
@@ -202,107 +236,45 @@ ItalicFont={KaiTi}]{SimSun}
   \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{参考文献}
+\begin{frame}[fragile]{提醒}
   \begin{itemize}
-    \item 推荐 \BibTeX
-      \begin{itemize}
-        \item 参考文献管理自动化
-        \item bib 文件
-        \item bst 参考文献样式文件：\texttt{thubib.bst}
-      \end{itemize}
-    \item 学校要求两种引用方式：
-      \begin{itemize}
-        \item 上标模式：如``在许多文献$^{[12,13]}$中……''
-        \begin{lstlisting}
-  \cite{key12, key13}
-        \end{lstlisting}
-      \item 正文模式：如``文献~[14] 证明了……''
-        \begin{lstlisting}
-  \onlinecite{key14}
-        \end{lstlisting}
-      \end{itemize}
+  \item 参考文献不能为空
+    \begin{itemize}
+      \item 至少需要引用一篇参考文献
+      \item 如果不需要参考文献，可将 |main.tex| 中 |\bib| 开头两行删除或注释
     \end{itemize}
-\end{frame}
-
-\section{总结}
-
-\begin{frame}{常见问题}
-  \begin{itemize}
-  \item \alert{编译不通过} 缺少必要宏包，命令拼写错误，括号未配对等
-  \item \alert{表格图片乱跑} \LaTeX{} 自身的浮动定位算法
-  \item \alert{段落间距变大} \LaTeX{} 排版算法
-  \item \alert{参考文献} 推荐使用 \BibTeX{}，也可以手写 \cmd{bibitem}
+  \item 同一字体勿重复安装
+    \begin{itemize}
+      \item 检查 |fc-list :lang=zh file family style > zhfonts.txt| 命令输出
+    \end{itemize}
+  \item 过长的 URL
+    \begin{itemize}
+      \item URL 缩短服务
+      \item 定制 URL 断行规则：|\PassOptionsToPackage{hyphens}{url}|
+    \end{itemize}
+  \item 附录中自动生成参考文献列表
+    \begin{itemize}
+      \item 现有基于\href{https://github.com/linhr/thuappendixbib}{chapterbib}%
+        的临时解决方案
+      \item 基于 biblatex 的方案有待研究
+    \end{itemize}
   \end{itemize}
 \end{frame}
 
-\begin{frame}{一点建议}
-  \begin{itemize}
-    \item 先学习
-      \begin{itemize}
-        \item 仔细阅读《一份不太简短的~\LaTeXe{} 介绍》(lshort-zh)~(1--2 天)
-        \item 粗略阅读《\LaTeXe{} 插图指南》~(2--3 小时)
-        \item 仔细阅读《\ThuThesis{} 用户手册》~(20 分钟)
-        \item 从~\ThuThesis{} 示例文档入手
-      \end{itemize}
-  \end{itemize}
-\end{frame}
-
-\begin{frame}{利用文档}
-  \begin{itemize}
-    \item 常用文档
-      \begin{itemize}
-        \item symbols: 符号大全
-        \item Mathmode: 数学参考
-        \item ctex, xeCJK: 中文支持
-        \item texlive-zh: \TL 安装与使用
-        \item 所用宏包文档
-      \end{itemize}
-    \item 工具
-      \begin{itemize}
-        \item tlmgr: \TL 管理器
-        \item texdoc: \TeX{} 文档查看器\\
-          例如：\texttt{texdoc lshort-zh}
-      \end{itemize}
-  \end{itemize}
-\end{frame}
-
-% 寻求帮助
-\begin{frame}{求助}
-  \begin{columns}[c]
-    \begin{column}{.45\textwidth}
-      \begin{itemize}
-        \item BBS
-          \begin{itemize}
-            \item \href{http://www.newsmth.net/nForum/board/TeX}{水木
-              社区 TeX 版}
-            \item \href{http://bbs.ctex.org/}{bbs.ctex.org}
-          \end{itemize}
-        \item \href{http://www.tex.ac.uk/cgi-bin/texfaq2html}{UK FAQ}
-        \item TeX StackExchange
-        \item \href{http://justfuckinggoogleit.com/}{Google}
-      \end{itemize}
-    \end{column}
-    \begin{column}{.45\textwidth}
-      \includegraphics[width=\textwidth]{TFZsuperellipse-crop.pdf}
-    \end{column}
-  \end{columns}
-\end{frame}
-
-\begin{frame}{\ThuThesis 问题}
+\begin{frame}{遇到问题}
 \begin{itemize}
-\item GitHub Issues 提问
-\item \TeX @newsmth 查找或发文
-\item \href{http://groups.google.com/group/thuthesis}\ThuThesis{} Google Group 发问
+  \item \href{https://github.com/xueruini/thuthesis/issues}{GitHub Issues} 提问
+  \item \TeX @newsmth 查找或发文
+  \item \href{http://groups.google.com/group/thuthesis}\ThuThesis{} Google Group 发问
 \end{itemize}
 \end{frame}
 
 
-\begin{frame}{你也可以帮助}
+\begin{frame}{参与贡献}
 \begin{itemize}
-\item 错误反馈：GitHub Issues
-\item 改进建议：GitHub Issues
-\item 出力维护：LaTeX 宏包编写、Git
-\item 科普、答疑\pause \hspace{2em}\alert{图书馆讲座征主讲人！}
+\item 错误反馈与改进建议：GitHub Issues
+\item 出力维护：代码更新整理
+\item 科普、答疑
 \end{itemize}
 \end{frame}
 
@@ -310,25 +282,8 @@ ItalicFont={KaiTi}]{SimSun}
 
 \begin{frame}
   \begin{itemize}
-    \item 本幻灯片：\url{https://github.com/alick/thulib-latex-talk}
-    \item 本幻灯片基于：
-      \begin{itemize}
-        \item \url{http://github.com/alick/fad-texlive-talk}
-        \item \ThuThesis{}使用向导 v3.0
-      \end{itemize}
+    \item 本幻灯片基于：\url{https://github.com/alick/thulib-latex-talk}
     \item 许可证：CC BY-SA 4.0 Unported \cc\ccby\ccsa
-  \end{itemize}
-\end{frame}
-
-\begin{frame}{扩展阅读}
-  \begin{itemize}
-    \item \LaTeX\ Tips:
-      \url{https://alick.fedorapeople.org/fudcon-apac-2014/latex-tips.pdf} \\
-      （例如：\LaTeX{} 中引号的正确输入姿势）
-    \item Linux 用户：\url{https://github.com/alick/fad-texlive-talk}
-    \item \ThuThesis{}使用向导 v3.0 （薛瑞尼）
-    \item \LaTeX{}杂谈（刘海洋）
-    \item 《\LaTeX{}入门》（刘海洋）
   \end{itemize}
 \end{frame}
 
@@ -338,7 +293,7 @@ ItalicFont={KaiTi}]{SimSun}
   \end{center}
   \begin{figure}[htbp]
     \centering
-    %\includegraphics[height=.2\textheight]{url.pdf}
+    \includegraphics[height=.3\textheight]{url.pdf}
   \end{figure}
 \end{frame}
 
